@@ -35,5 +35,14 @@ func gen(pkg, file string) error {
 		panic(err)
 	}
 	astFile := s.Ast(pkg)
-	return printer.Fprint(os.Stdout, token.NewFileSet(), astFile)
+
+	// return printer.Fprint(os.Stdout, token.NewFileSet(), astFile)
+
+	f1, err := os.OpenFile("test.go", os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+	return printer.Fprint(f1, token.NewFileSet(), astFile)
+
 }

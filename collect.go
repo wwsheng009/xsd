@@ -1,6 +1,7 @@
 package xsd
 
 import (
+	"fmt"
 	"strconv"
 
 	"bitbucket.org/pkg/inflect"
@@ -19,6 +20,9 @@ func newCollector() *collector {
 }
 
 func (c *collector) add(t Type) {
+	if t.TypeName() == "" {
+		fmt.Println("empty name")
+	}
 	if !c.set[t.TypeName()] {
 		c.types = append(c.types, t)
 		c.set[t.TypeName()] = true
@@ -113,7 +117,11 @@ func (s Choice) collect(c *collector, namespace string) {
 }
 
 func (e Element) collect(c *collector, namespace string) {
+	if e.Name == "GBAltSeqItem_interval" {
+		fmt.Println("GBAltSeqItem_interval")
+	}
 	if e.ComplexType != nil {
+
 		if e.ComplexType.Name == "" {
 			e.ComplexType.Name = e.Name
 		}
@@ -121,8 +129,14 @@ func (e Element) collect(c *collector, namespace string) {
 			e.ComplexType.Annotation = e.Annotation
 		}
 		e.ComplexType.collect(c, e.GoName())
-	} else if e.Type != "" {
+	} else if e.Type != "" && e.Name != "" {
 		c.add(&e)
+	} else {
+		// if e.Name == "" && e.Type == "" && e.Ref != "" {
+		// 	e.Name = e.Ref
+		// 	e.Type = e.Ref
+		// 	c.add(&e)
+		// }
 	}
 	/*
 		if e.MaxOccurs == "unbounded" {

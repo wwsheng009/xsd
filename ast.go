@@ -1,6 +1,7 @@
 package xsd
 
 import (
+	"fmt"
 	"go/ast"
 	"go/token"
 	"sort"
@@ -98,6 +99,9 @@ func (t pluralType) Decls() []ast.Decl {
 }
 
 func (t ComplexType) Decls() []ast.Decl {
+	if t.Name == "GBAltSeqData_items" {
+		fmt.Println("GBAltSeqData_items")
+	}
 	doc := t.Annotation.Documentation
 	if doc != "" {
 		doc = cleanDoc(doc)
@@ -120,6 +124,13 @@ func (t ComplexType) Decls() []ast.Decl {
 	}
 	for _, choice := range t.Choices {
 		fields = append(fields, choice.Fields(false)...)
+	}
+	for _, v := range fields {
+		for _, n1 := range v.Names {
+			if n1.Name == "" {
+				println("emty name")
+			}
+		}
 	}
 	// general attributes
 	if len(t.Attributes) > 0 || t.SimpleContent != nil {
@@ -208,6 +219,9 @@ func (e Element) Field(plural bool) *ast.Field {
 		if len(e.ComplexType.Sequences) > 0 && e.ComplexType.Sequences[0].MaxOccurs == "unbounded" {
 			plural = true
 		}
+	}
+	if e.Name == "" && e.Ref != "" {
+		e.Name = e.Ref
 	}
 	if e.GoType() == "" {
 		e.Type = e.Name

@@ -34,10 +34,9 @@ type GBAltSeqItem struct {
 }
 
 //
-// type GBAltSeqItemInterval struct {
-//           `xml:"" json:""`
-
-// }
+type GBAltSeqItemInterval struct {
+	GBInterval GBInterval `xml:"GBInterval" json:"gb_interval"`
+}
 
 //
 type GBAltSeqItemIsgap struct {
@@ -47,11 +46,6 @@ type GBAltSeqItemIsgap struct {
 	Attrs []xml.Attr `xml:",attr,omitempty" json:"attrs,omitempty"`
 }
 type GBAltSeqItemIsgapValue string
-
-// const (
-//         True    GBAltSeqItemIsgapValue  = "true"
-//         False   GBAltSeqItemIsgapValue  = "false"
-// )
 
 type GBAltSeqItemFirstAccn struct {
 	GBAltSeqItemFirstAccn string `xml:"GBAltSeqItem_first-accn,omitempty" json:"gb_alt_seq_item_first_accn,omitempty"`
@@ -119,11 +113,6 @@ type GBFeaturePartial3 struct {
 }
 type GBFeaturePartial3Value string
 
-// const (
-//         True    GBFeaturePartial3Value  = "true"
-//         False   GBFeaturePartial3Value  = "false"
-// )
-
 //
 type GBFeaturePartial5 struct {
 	Value string `xml:"value,attr" json:"value"`
@@ -132,11 +121,6 @@ type GBFeaturePartial5 struct {
 	Attrs []xml.Attr `xml:",attr,omitempty" json:"attrs,omitempty"`
 }
 type GBFeaturePartial5Value string
-
-// const (
-//         True    GBFeaturePartial5Value  = "true"
-//         False   GBFeaturePartial5Value  = "false"
-// )
 
 //
 type GBFeatureSet struct {
@@ -181,11 +165,6 @@ type GBIntervalInterbp struct {
 }
 type GBIntervalInterbpValue string
 
-const (
-	True  GBIntervalInterbpValue = "true"
-	False GBIntervalInterbpValue = "false"
-)
-
 //
 type GBIntervalIscomp struct {
 	Value string `xml:"value,attr" json:"value"`
@@ -195,10 +174,10 @@ type GBIntervalIscomp struct {
 }
 type GBIntervalIscompValue string
 
-// const (
-//         True    GBIntervalIscompValue   = "true"
-//         False   GBIntervalIscompValue   = "false"
-// )
+const (
+	True  GBIntervalIscompValue = "true"
+	False GBIntervalIscompValue = "false"
+)
 
 type GBIntervalAccession struct {
 	GBIntervalAccession string `xml:"GBInterval_accession" json:"gb_interval_accession"`

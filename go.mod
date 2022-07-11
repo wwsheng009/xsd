@@ -7,4 +7,4 @@ require (
 	h12.io/xsd v0.0.0-20180505162226-8341fb052ca1
 )
 
-replace h12.io/xsd => D:\projects\go\temp\xsd
+replace h12.io/xsd => D:\projects\go\xsd_convert\xsd
