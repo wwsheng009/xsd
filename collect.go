@@ -86,11 +86,12 @@ func (r *Restriction) collect(c *collector, namespace, doc string) {
 			Doc:  doc,
 		}
 		switch goType(r.Base) {
-		case "NMTOKEN":
+		case "NMTOKEN", "string":
 			t.Type = "string"
 			for _, enum := range r.Enumerations {
 				t.KV = append(t.KV, KV{Key: snakeToCamel(enum.Value), Value: strconv.Quote(enum.Value)})
 			}
+
 		}
 		c.add(t)
 	}
@@ -120,6 +121,8 @@ func (e Element) collect(c *collector, namespace string) {
 			e.ComplexType.Annotation = e.Annotation
 		}
 		e.ComplexType.collect(c, e.GoName())
+	} else if e.Type != "" {
+		c.add(&e)
 	}
 	/*
 		if e.MaxOccurs == "unbounded" {

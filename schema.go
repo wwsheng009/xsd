@@ -87,6 +87,7 @@ type Element struct {
 	Id          string       `xml:"id,attr"`
 	Name        string       `xml:"name,attr"`
 	Type        string       `xml:"type,attr"`
+	Ref         string       `xml:"ref,attr"`
 	ComplexType *ComplexType `xml:"complexType"`
 	MinOccurs   string       `xml:"minOccurs,attr"`
 	MaxOccurs   string       `xml:"maxOccurs,attr"`

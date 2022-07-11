@@ -24,7 +24,7 @@ func Test(t *testing.T) {
 	checkError(err)
 	p(of, "package gccxml")
 	p(of, "")
-	s.Gen2(of, "xmlDoc__")
+	// s.Gen2(of, "xmlDoc__")
 }
 
 func checkError(err error) {

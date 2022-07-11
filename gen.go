@@ -48,7 +48,23 @@ func (e Element) GoName() string {
 }
 
 func (e Element) GoType() string {
-	return goType(e.Type)
+	// return goType(e.Type)
+	if e.Type != "" {
+		return goType(e.Type)
+	} else if e.ComplexType != nil {
+		if len(e.ComplexType.Sequences) > 0 &&
+			len(e.ComplexType.Sequences[0].Elements) > 0 &&
+			e.ComplexType.Sequences[0].Elements[0].Ref != "" {
+			return goType(e.ComplexType.Sequences[0].Elements[0].Ref)
+		}
+		// else if len(e.ComplexType.Attributes) > 0 &&
+		// 	e.ComplexType.Attributes[0].SimpleType != nil &&
+		// 	e.ComplexType.Attributes[0].SimpleType.Restriction != nil {
+		// 	return goType(e.ComplexType.Attributes[0].SimpleType.Restriction.Base)
+		// }
+
+	}
+	return goName(e.Name)
 }
 
 func trimNamespace(s string) string {
@@ -68,7 +84,8 @@ func goName(s string) string {
 }
 
 func snakeToCamel(s string) string {
-	ss := strings.Split(s, "_")
+	s1 := strings.ReplaceAll(s, "-", "_")
+	ss := strings.Split(s1, "_")
 	for i := range ss {
 		ss[i] = strings.Title(ss[i])
 	}

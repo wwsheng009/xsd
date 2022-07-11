@@ -14,6 +14,10 @@ func (a Types) Len() int           { return len(a) }
 func (a Types) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a Types) Less(i, j int) bool { return a[i].TypeName() < a[j].TypeName() }
 
+func (t Element) TypeName() string {
+	return t.Name
+}
+
 type pluralType struct {
 	Name string
 	Type string

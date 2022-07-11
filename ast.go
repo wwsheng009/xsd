@@ -42,6 +42,26 @@ func (s *Schema) Ast(name string) *ast.File {
 	return f
 }
 
+func (t *Element) Decls() []ast.Decl {
+	plural := false
+	var fields []*ast.Field
+	if t.MaxOccurs == "unbounded" {
+		plural = true
+	}
+
+	// for _, elem := range s.Elements {
+	fields = append(fields, t.Field(plural))
+	// }
+	// return fields
+
+	return []ast.Decl{&ast.GenDecl{Tok: token.TYPE, Specs: []ast.Spec{&ast.TypeSpec{
+		Name: &ast.Ident{Name: t.GoName()},
+		Type: &ast.StructType{Fields: &ast.FieldList{List: fields}},
+	}},
+		Doc: comment(""),
+	}}
+}
+
 func (t *enumType) Decls() []ast.Decl {
 	typeDecl := &ast.GenDecl{
 		Tok: token.TYPE,
@@ -184,6 +204,10 @@ func (e Element) Field(plural bool) *ast.Field {
 	}
 	if e.MaxOccurs == "unbounded" {
 		plural = true
+	} else if e.ComplexType != nil {
+		if len(e.ComplexType.Sequences) > 0 && e.ComplexType.Sequences[0].MaxOccurs == "unbounded" {
+			plural = true
+		}
 	}
 	if e.GoType() == "" {
 		e.Type = e.Name
